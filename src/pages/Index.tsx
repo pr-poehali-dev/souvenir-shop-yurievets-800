@@ -3,23 +3,73 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import Icon from '@/components/ui/icon';
 import { Separator } from '@/components/ui/separator';
+import Cart from '@/components/Cart';
+import { useToast } from '@/hooks/use-toast';
+
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  image: string;
+}
+
+interface CartItem extends Product {
+  quantity: number;
+}
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState('home');
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const { toast } = useToast();
 
-  const products = [
-    { id: 1, name: 'Матрёшка "Юрьевецкая"', price: '1200₽', image: 'https://cdn.poehali.dev/projects/7149dbc1-77c7-4599-b055-b1ff708af2b5/files/e62cf0fc-0f52-498f-a97d-ba3bc54c4282.jpg' },
-    { id: 2, name: 'Керамическая кружка с видами города', price: '800₽', image: 'https://cdn.poehali.dev/projects/7149dbc1-77c7-4599-b055-b1ff708af2b5/files/e62cf0fc-0f52-498f-a97d-ba3bc54c4282.jpg' },
-    { id: 3, name: 'Магнит "Храм 800 лет"', price: '250₽', image: 'https://cdn.poehali.dev/projects/7149dbc1-77c7-4599-b055-b1ff708af2b5/files/e62cf0fc-0f52-498f-a97d-ba3bc54c4282.jpg' },
-    { id: 4, name: 'Набор открыток "История"', price: '450₽', image: 'https://cdn.poehali.dev/projects/7149dbc1-77c7-4599-b055-b1ff708af2b5/files/e62cf0fc-0f52-498f-a97d-ba3bc54c4282.jpg' },
-    { id: 5, name: 'Деревянная шкатулка', price: '2500₽', image: 'https://cdn.poehali.dev/projects/7149dbc1-77c7-4599-b055-b1ff708af2b5/files/e62cf0fc-0f52-498f-a97d-ba3bc54c4282.jpg' },
-    { id: 6, name: 'Льняная салфетка с вышивкой', price: '600₽', image: 'https://cdn.poehali.dev/projects/7149dbc1-77c7-4599-b055-b1ff708af2b5/files/e62cf0fc-0f52-498f-a97d-ba3bc54c4282.jpg' },
+  const products: Product[] = [
+    { id: 1, name: 'Матрёшка "Юрьевецкая"', price: 1200, image: 'https://cdn.poehali.dev/projects/7149dbc1-77c7-4599-b055-b1ff708af2b5/files/e62cf0fc-0f52-498f-a97d-ba3bc54c4282.jpg' },
+    { id: 2, name: 'Керамическая кружка с видами города', price: 800, image: 'https://cdn.poehali.dev/projects/7149dbc1-77c7-4599-b055-b1ff708af2b5/files/e62cf0fc-0f52-498f-a97d-ba3bc54c4282.jpg' },
+    { id: 3, name: 'Магнит "Храм 800 лет"', price: 250, image: 'https://cdn.poehali.dev/projects/7149dbc1-77c7-4599-b055-b1ff708af2b5/files/e62cf0fc-0f52-498f-a97d-ba3bc54c4282.jpg' },
+    { id: 4, name: 'Набор открыток "История"', price: 450, image: 'https://cdn.poehali.dev/projects/7149dbc1-77c7-4599-b055-b1ff708af2b5/files/e62cf0fc-0f52-498f-a97d-ba3bc54c4282.jpg' },
+    { id: 5, name: 'Деревянная шкатулка', price: 2500, image: 'https://cdn.poehali.dev/projects/7149dbc1-77c7-4599-b055-b1ff708af2b5/files/e62cf0fc-0f52-498f-a97d-ba3bc54c4282.jpg' },
+    { id: 6, name: 'Льняная салфетка с вышивкой', price: 600, image: 'https://cdn.poehali.dev/projects/7149dbc1-77c7-4599-b055-b1ff708af2b5/files/e62cf0fc-0f52-498f-a97d-ba3bc54c4282.jpg' },
   ];
 
   const scrollToSection = (section: string) => {
     setActiveSection(section);
     const element = document.getElementById(section);
     element?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const addToCart = (product: Product) => {
+    setCartItems(prev => {
+      const existing = prev.find(item => item.id === product.id);
+      if (existing) {
+        return prev.map(item => 
+          item.id === product.id 
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      }
+      return [...prev, { ...product, quantity: 1 }];
+    });
+    toast({
+      title: "Добавлено в корзину",
+      description: product.name,
+    });
+  };
+
+  const removeFromCart = (id: number) => {
+    setCartItems(prev => prev.filter(item => item.id !== id));
+  };
+
+  const updateQuantity = (id: number, quantity: number) => {
+    setCartItems(prev => prev.map(item => 
+      item.id === id ? { ...item, quantity } : item
+    ));
+  };
+
+  const clearCart = () => {
+    setCartItems([]);
+    toast({
+      title: "Корзина очищена",
+    });
   };
 
   return (
@@ -31,13 +81,21 @@ const Index = () => {
               <Icon name="Gift" size={28} className="text-primary" />
               <h1 className="text-2xl font-bold text-primary">Юрьевец 800</h1>
             </div>
-            <div className="hidden md:flex gap-6">
-              <button onClick={() => scrollToSection('home')} className={`transition-colors ${activeSection === 'home' ? 'text-primary' : 'text-foreground hover:text-primary'}`}>Главная</button>
-              <button onClick={() => scrollToSection('catalog')} className={`transition-colors ${activeSection === 'catalog' ? 'text-primary' : 'text-foreground hover:text-primary'}`}>Каталог</button>
-              <button onClick={() => scrollToSection('about')} className={`transition-colors ${activeSection === 'about' ? 'text-primary' : 'text-foreground hover:text-primary'}`}>О лавке</button>
-              <button onClick={() => scrollToSection('history')} className={`transition-colors ${activeSection === 'history' ? 'text-primary' : 'text-foreground hover:text-primary'}`}>История</button>
-              <button onClick={() => scrollToSection('delivery')} className={`transition-colors ${activeSection === 'delivery' ? 'text-primary' : 'text-foreground hover:text-primary'}`}>Доставка</button>
-              <button onClick={() => scrollToSection('contacts')} className={`transition-colors ${activeSection === 'contacts' ? 'text-primary' : 'text-foreground hover:text-primary'}`}>Контакты</button>
+            <div className="flex items-center gap-4">
+              <div className="hidden md:flex gap-6">
+                <button onClick={() => scrollToSection('home')} className={`transition-colors ${activeSection === 'home' ? 'text-primary' : 'text-foreground hover:text-primary'}`}>Главная</button>
+                <button onClick={() => scrollToSection('catalog')} className={`transition-colors ${activeSection === 'catalog' ? 'text-primary' : 'text-foreground hover:text-primary'}`}>Каталог</button>
+                <button onClick={() => scrollToSection('about')} className={`transition-colors ${activeSection === 'about' ? 'text-primary' : 'text-foreground hover:text-primary'}`}>О лавке</button>
+                <button onClick={() => scrollToSection('history')} className={`transition-colors ${activeSection === 'history' ? 'text-primary' : 'text-foreground hover:text-primary'}`}>История</button>
+                <button onClick={() => scrollToSection('delivery')} className={`transition-colors ${activeSection === 'delivery' ? 'text-primary' : 'text-foreground hover:text-primary'}`}>Доставка</button>
+                <button onClick={() => scrollToSection('contacts')} className={`transition-colors ${activeSection === 'contacts' ? 'text-primary' : 'text-foreground hover:text-primary'}`}>Контакты</button>
+              </div>
+              <Cart 
+                items={cartItems}
+                onRemoveItem={removeFromCart}
+                onUpdateQuantity={updateQuantity}
+                onClearCart={clearCart}
+              />
             </div>
           </div>
         </div>
@@ -84,8 +142,8 @@ const Index = () => {
                 <CardContent className="p-6">
                   <h3 className="font-semibold text-lg mb-2">{product.name}</h3>
                   <div className="flex items-center justify-between">
-                    <span className="text-2xl font-bold text-primary">{product.price}</span>
-                    <Button size="sm" variant="outline">
+                    <span className="text-2xl font-bold text-primary">{product.price}₽</span>
+                    <Button size="sm" variant="outline" onClick={() => addToCart(product)}>
                       <Icon name="ShoppingCart" size={16} />
                     </Button>
                   </div>
