@@ -127,7 +127,7 @@ const Index = () => {
       <section id="home" className="pt-32 pb-20 px-4">
         <div className="container mx-auto max-w-6xl">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
+            <div className="animate-fade-in-up">
               <h2 className="text-5xl md:text-6xl font-bold text-primary mb-6">Юрьевец 800</h2>
               <p className="text-xl text-muted-foreground mb-8">
                 Добро пожаловать в нашу лавку сувениров, посвящённую 800-летию Кржевца. 
@@ -138,7 +138,7 @@ const Index = () => {
                 <Icon name="ArrowRight" size={18} />
               </Button>
             </div>
-            <div className="relative h-[400px] rounded-lg overflow-hidden">
+            <div className="relative h-[400px] rounded-lg overflow-hidden animate-fade-in" style={{animationDelay: '200ms'}}>
               <img 
                 src="https://cdn.poehali.dev/projects/7149dbc1-77c7-4599-b055-b1ff708af2b5/files/db1e97e4-46df-4dd1-a02b-26e6a1e3947f.jpg" 
                 alt="Юрьевец" 
@@ -151,10 +151,10 @@ const Index = () => {
 
       <section id="catalog" className="py-20 px-4 bg-muted/30">
         <div className="container mx-auto max-w-6xl">
-          <h2 className="text-4xl font-bold text-primary mb-12 text-center">Каталог сувениров</h2>
+          <h2 className="text-4xl font-bold text-primary mb-12 text-center animate-fade-in-up">Каталог сувениров</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {products.map((product) => (
-              <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+            {products.map((product, index) => (
+              <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-all hover:scale-105 animate-fade-in-up" style={{animationDelay: `${index * 100}ms`}}>
                 <div className="aspect-square bg-muted">
                   <img 
                     src={product.image} 
@@ -179,8 +179,8 @@ const Index = () => {
 
       <section id="about" className="py-20 px-4">
         <div className="container mx-auto max-w-4xl">
-          <h2 className="text-4xl font-bold text-primary mb-8 text-center">О лавке</h2>
-          <div className="prose prose-lg max-w-none text-foreground">
+          <h2 className="text-4xl font-bold text-primary mb-8 text-center animate-fade-in-up">О лавке</h2>
+          <div className="prose prose-lg max-w-none text-foreground animate-fade-in-up" style={{animationDelay: '200ms'}}>
             <p className="text-lg leading-relaxed mb-6">
               Наша сувенирная лавка была создана специально к празднованию 800-летия города Юрьевца. 
               Мы тщательно отбираем каждый предмет, следя за тем, чтобы он отражал уникальную 
@@ -197,16 +197,16 @@ const Index = () => {
 
       <section id="history" className="py-20 px-4 bg-muted/30">
         <div className="container mx-auto max-w-6xl">
-          <h2 className="text-4xl font-bold text-primary mb-12 text-center">История Юрьевца</h2>
+          <h2 className="text-4xl font-bold text-primary mb-12 text-center animate-fade-in-up">История Юрьевца</h2>
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="relative h-[400px] rounded-lg overflow-hidden order-2 md:order-1">
+            <div className="relative h-[400px] rounded-lg overflow-hidden order-2 md:order-1 animate-fade-in" style={{animationDelay: '200ms'}}>
               <img 
                 src="https://cdn.poehali.dev/projects/7149dbc1-77c7-4599-b055-b1ff708af2b5/files/1bc43422-3dd1-4baa-91fe-c9ca0f4ab6b2.jpg" 
                 alt="История Юрьевца" 
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="order-1 md:order-2">
+            <div className="order-1 md:order-2 animate-fade-in-up" style={{animationDelay: '300ms'}}>
               <div className="space-y-6">
                 <div className="flex gap-4">
                   <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
@@ -243,23 +243,23 @@ const Index = () => {
 
       <section id="delivery" className="py-20 px-4">
         <div className="container mx-auto max-w-4xl">
-          <h2 className="text-4xl font-bold text-primary mb-12 text-center">Доставка</h2>
+          <h2 className="text-4xl font-bold text-primary mb-12 text-center animate-fade-in-up">Доставка</h2>
           <div className="grid sm:grid-cols-3 gap-8">
-            <Card className="text-center p-6">
+            <Card className="text-center p-6 animate-fade-in-up" style={{animationDelay: '100ms'}}>
               <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
                 <Icon name="Store" size={32} className="text-primary" />
               </div>
               <h3 className="font-bold text-lg mb-2">Самовывоз</h3>
               <p className="text-sm text-muted-foreground">Бесплатно из нашей лавки в центре города</p>
             </Card>
-            <Card className="text-center p-6">
+            <Card className="text-center p-6 animate-fade-in-up" style={{animationDelay: '200ms'}}>
               <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
                 <Icon name="Truck" size={32} className="text-primary" />
               </div>
               <h3 className="font-bold text-lg mb-2">По России</h3>
               <p className="text-sm text-muted-foreground">Почтой России от 300₽, 5-14 дней</p>
             </Card>
-            <Card className="text-center p-6">
+            <Card className="text-center p-6 animate-fade-in-up" style={{animationDelay: '300ms'}}>
               <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
                 <Icon name="Package" size={32} className="text-primary" />
               </div>
@@ -272,9 +272,9 @@ const Index = () => {
 
       <section id="contacts" className="py-20 px-4 bg-muted/30">
         <div className="container mx-auto max-w-4xl">
-          <h2 className="text-4xl font-bold text-primary mb-12 text-center">Контакты</h2>
+          <h2 className="text-4xl font-bold text-primary mb-12 text-center animate-fade-in-up">Контакты</h2>
           <div className="grid md:grid-cols-2 gap-12">
-            <div className="space-y-6">
+            <div className="space-y-6 animate-fade-in-up" style={{animationDelay: '200ms'}}>
               <div className="flex gap-4">
                 <Icon name="MapPin" size={24} className="text-primary flex-shrink-0" />
                 <div>
@@ -304,7 +304,7 @@ const Index = () => {
                 </div>
               </div>
             </div>
-            <Card className="p-6">
+            <Card className="p-6 animate-fade-in-up" style={{animationDelay: '300ms'}}>
               <h3 className="font-bold text-lg mb-4">Напишите нам</h3>
               <form className="space-y-4">
                 <input 
