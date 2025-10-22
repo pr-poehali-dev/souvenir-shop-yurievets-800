@@ -140,7 +140,7 @@ const Index = () => {
             </div>
             <div className="relative h-[400px] rounded-lg overflow-hidden animate-fade-in" style={{animationDelay: '200ms'}}>
               <img 
-                src="https://cdn.poehali.dev/projects/7149dbc1-77c7-4599-b055-b1ff708af2b5/files/db1e97e4-46df-4dd1-a02b-26e6a1e3947f.jpg" 
+                src="https://cdn.poehali.dev/projects/7149dbc1-77c7-4599-b055-b1ff708af2b5/files/c0d784ff-62c1-4526-8759-c0b197ce4f52.jpg" 
                 alt="Юрьевец" 
                 className="w-full h-full object-cover"
               />
@@ -201,7 +201,7 @@ const Index = () => {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="relative h-[400px] rounded-lg overflow-hidden order-2 md:order-1 animate-fade-in" style={{animationDelay: '200ms'}}>
               <img 
-                src="https://cdn.poehali.dev/projects/7149dbc1-77c7-4599-b055-b1ff708af2b5/files/1bc43422-3dd1-4baa-91fe-c9ca0f4ab6b2.jpg" 
+                src="https://cdn.poehali.dev/projects/7149dbc1-77c7-4599-b055-b1ff708af2b5/files/af08d030-42ad-48d6-899d-15f8ac458707.jpg" 
                 alt="История Юрьевца" 
                 className="w-full h-full object-cover"
               />
