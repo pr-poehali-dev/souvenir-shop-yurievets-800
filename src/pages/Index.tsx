@@ -130,7 +130,7 @@ const Index = () => {
             <div className="animate-fade-in-up">
               <h2 className="text-5xl md:text-6xl font-bold text-primary mb-6">Юрьевец 800</h2>
               <p className="text-xl text-muted-foreground mb-8">
-                Добро пожаловать в нашу лавку сувениров, посвящённую 800-летию Кржевца. 
+                Добро пожаловать в нашу лавку сувениров, посвящённую 800-летию Юрьевца. 
                 Здесь вы найдёте уникальные предметы, отражающие богатую историю и культуру нашего города.
               </p>
               <Button onClick={() => scrollToSection('catalog')} size="lg" className="gap-2">
