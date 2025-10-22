@@ -20,6 +20,7 @@ interface CartItem extends Product {
 const Index = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { toast } = useToast();
 
   const products: Product[] = [
@@ -33,6 +34,7 @@ const Index = () => {
 
   const scrollToSection = (section: string) => {
     setActiveSection(section);
+    setMobileMenuOpen(false);
     const element = document.getElementById(section);
     element?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -96,10 +98,31 @@ const Index = () => {
                 onUpdateQuantity={updateQuantity}
                 onClearCart={clearCart}
               />
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="md:hidden"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              >
+                <Icon name={mobileMenuOpen ? "X" : "Menu"} size={24} />
+              </Button>
             </div>
           </div>
         </div>
       </nav>
+
+      {mobileMenuOpen && (
+        <div className="fixed top-[73px] left-0 right-0 bg-background/98 backdrop-blur-sm z-40 border-b border-border md:hidden">
+          <div className="container mx-auto px-4 py-4 flex flex-col gap-3">
+            <button onClick={() => scrollToSection('home')} className={`text-left py-2 transition-colors ${activeSection === 'home' ? 'text-primary font-semibold' : 'text-foreground'}`}>Главная</button>
+            <button onClick={() => scrollToSection('catalog')} className={`text-left py-2 transition-colors ${activeSection === 'catalog' ? 'text-primary font-semibold' : 'text-foreground'}`}>Каталог</button>
+            <button onClick={() => scrollToSection('about')} className={`text-left py-2 transition-colors ${activeSection === 'about' ? 'text-primary font-semibold' : 'text-foreground'}`}>О лавке</button>
+            <button onClick={() => scrollToSection('history')} className={`text-left py-2 transition-colors ${activeSection === 'history' ? 'text-primary font-semibold' : 'text-foreground'}`}>История</button>
+            <button onClick={() => scrollToSection('delivery')} className={`text-left py-2 transition-colors ${activeSection === 'delivery' ? 'text-primary font-semibold' : 'text-foreground'}`}>Доставка</button>
+            <button onClick={() => scrollToSection('contacts')} className={`text-left py-2 transition-colors ${activeSection === 'contacts' ? 'text-primary font-semibold' : 'text-foreground'}`}>Контакты</button>
+          </div>
+        </div>
+      )}
 
       <section id="home" className="pt-32 pb-20 px-4">
         <div className="container mx-auto max-w-6xl">
